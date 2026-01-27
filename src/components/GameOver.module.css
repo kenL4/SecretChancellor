@@ -1,0 +1,239 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.card {
+    width: 100%;
+    max-width: 600px;
+    padding: var(--space-2xl);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    animation: scaleIn 0.5s ease;
+}
+
+.suWin {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(36, 113, 163, 0.1) 100%);
+    border: 2px solid var(--student-union);
+    box-shadow: 0 0 60px rgba(52, 152, 219, 0.3);
+}
+
+.adminWin {
+    background: linear-gradient(135deg, rgba(192, 57, 43, 0.2) 0%, rgba(146, 43, 33, 0.1) 100%);
+    border: 2px solid var(--admin);
+    box-shadow: 0 0 60px rgba(192, 57, 43, 0.3);
+}
+
+.header {
+    margin-bottom: var(--space-xl);
+}
+
+.emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: var(--space-md);
+    animation: bounce 1s ease infinite;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.suWin .title {
+    color: var(--student-union);
+}
+
+.adminWin .title {
+    color: var(--admin);
+}
+
+.reason {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.resultBadge {
+    display: inline-block;
+    padding: var(--space-md) var(--space-xl);
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.victory {
+    background: var(--gradient-gold);
+    color: var(--ink);
+    animation: glow 2s infinite;
+}
+
+.defeat {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-secondary);
+}
+
+.rolesSection {
+    margin-bottom: var(--space-xl);
+}
+
+.rolesTitle {
+    font-size: 1.25rem;
+    color: var(--gold-accent);
+    margin-bottom: var(--space-lg);
+}
+
+.rolesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.playerRole {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.suRole {
+    background: rgba(52, 152, 219, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.coRole {
+    background: rgba(192, 57, 43, 0.1);
+    border: 1px solid rgba(192, 57, 43, 0.3);
+}
+
+.chancellorRole {
+    background: rgba(196, 163, 90, 0.1);
+    border: 1px solid rgba(196, 163, 90, 0.5);
+    box-shadow: 0 0 10px rgba(196, 163, 90, 0.2);
+}
+
+.playerAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gradient-cambridge);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    flex-shrink: 0;
+}
+
+.chancellorRole .playerAvatar {
+    background: var(--gradient-gold);
+    color: var(--ink);
+}
+
+.playerInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.playerName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.youTag {
+    color: var(--gold-accent);
+}
+
+.roleName {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.deadBadge {
+    font-size: 1.25rem;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold-accent);
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(196, 163, 90, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(196, 163, 90, 0.6);
+    }
+}
+
+@media (max-width: 640px) {
+    .card {
+        padding: var(--space-xl);
+    }
+
+    .emoji {
+        font-size: 3.5rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .stats {
+        gap: var(--space-xl);
+    }
+}

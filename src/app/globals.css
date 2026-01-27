@@ -1,42 +1,879 @@
+/* Secret Chancellor - Cambridge University Theme */
+
+/* CSS Custom Properties */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cambridge Colors */
+  --cambridge-blue: #a3c1ad;
+  --cambridge-dark-blue: #1a4d5c;
+  --oxford-blue: #002147;
+  --university-red: #8b0000;
+  --gold-accent: #c4a35a;
+  --parchment: #f5f0e6;
+  --ink: #1a1a1a;
+  
+  /* Policy Colors */
+  --student-union: #3498db;
+  --student-union-light: #5dade2;
+  --student-union-dark: #2471a3;
+  --admin: #c0392b;
+  --admin-light: #e74c3c;
+  --admin-dark: #922b21;
+  
+  /* UI Colors */
+  --bg-primary: #0f1419;
+  --bg-secondary: #1a2332;
+  --bg-tertiary: #243447;
+  --bg-card: rgba(26, 35, 50, 0.9);
+  --text-primary: #f5f0e6;
+  --text-secondary: #a0a8b0;
+  --text-muted: #6b7280;
+  --border-color: rgba(164, 193, 173, 0.2);
+  --border-highlight: rgba(196, 163, 90, 0.4);
+  
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #c4a35a 0%, #e8d5a8 50%, #c4a35a 100%);
+  --gradient-cambridge: linear-gradient(135deg, #1a4d5c 0%, #2d7a8c 100%);
+  --gradient-dark: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow-gold: 0 0 20px rgba(196, 163, 90, 0.3);
+  --shadow-glow-blue: 0 0 20px rgba(52, 152, 219, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(192, 57, 43, 0.3);
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html,
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background: var(--gradient-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* Background Pattern */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(163, 193, 173, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196, 163, 90, 0.05) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4a35a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: 1.75rem;
+  color: var(--gold-accent);
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-secondary);
 }
 
 a {
-  color: inherit;
+  color: var(--cambridge-blue);
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+a:hover {
+  color: var(--gold-accent);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: var(--gradient-cambridge);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-blue);
+}
+
+.btn-gold {
+  background: var(--gradient-gold);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-gold);
+}
+
+.btn-approve {
+  background: linear-gradient(135deg, var(--student-union) 0%, var(--student-union-dark) 100%);
+  color: white;
+}
+
+.btn-approve:hover {
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.btn-reject {
+  background: linear-gradient(135deg, var(--admin) 0%, var(--admin-dark) 100%);
+  color: white;
+}
+
+.btn-reject:hover {
+  box-shadow: var(--shadow-glow-red);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled::before {
+  display: none;
+}
+
+/* Form Elements */
+.input {
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 0 4px rgba(196, 163, 90, 0.1);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Policy Cards */
+.policy-card {
+  width: 80px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.policy-card::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: calc(var(--radius-md) - 2px);
+}
+
+.policy-card.student-union {
+  background: linear-gradient(135deg, var(--student-union) 0%, var(--student-union-dark) 100%);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.policy-card.admin {
+  background: linear-gradient(135deg, var(--admin) 0%, var(--admin-dark) 100%);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.policy-card.hidden {
+  background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+  color: transparent;
+}
+
+.policy-card:hover:not(.disabled) {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.policy-card.selected {
+  outline: 3px solid var(--gold-accent);
+  outline-offset: 2px;
+}
+
+.policy-card.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Policy Track */
+.policy-track {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.policy-slot {
+  width: 50px;
+  height: 70px;
+  border-radius: var(--radius-sm);
+  border: 2px dashed var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.policy-slot.filled {
+  border-style: solid;
+}
+
+.policy-slot.student-union {
+  border-color: var(--student-union);
+  background: rgba(52, 152, 219, 0.2);
+}
+
+.policy-slot.admin {
+  border-color: var(--admin);
+  background: rgba(192, 57, 43, 0.2);
+}
+
+.policy-slot .power-badge {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.625rem;
+  padding: 2px 6px;
+  background: var(--gold-accent);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+/* Player Cards */
+.player-card {
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.player-card:hover:not(.disabled) {
+  border-color: var(--gold-accent);
+  transform: translateX(4px);
+}
+
+.player-card.selected {
+  border-color: var(--gold-accent);
+  background: rgba(196, 163, 90, 0.1);
+}
+
+.player-card.dead {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.player-card.disabled {
+  cursor: not-allowed;
+}
+
+.player-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient-cambridge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.player-badges {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.badge {
+  padding: 4px 8px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sm);
+}
+
+.badge-vc {
+  background: var(--gradient-gold);
+  color: var(--ink);
+}
+
+.badge-chair {
+  background: var(--gradient-cambridge);
+  color: white;
+}
+
+.badge-host {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+.badge-dead {
+  background: rgba(192, 57, 43, 0.3);
+  color: var(--admin-light);
+}
+
+/* Vote Indicators */
+.vote-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.vote-indicator.approve {
+  background: var(--student-union);
+  color: white;
+}
+
+.vote-indicator.reject {
+  background: var(--admin);
+  color: white;
+}
+
+.vote-indicator.pending {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  animation: pulse 2s infinite;
+}
+
+/* Election Tracker */
+.election-tracker {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.election-marker {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all var(--transition-normal);
+}
+
+.election-marker.active {
+  background: var(--admin);
+  border-color: var(--admin);
+  color: white;
+}
+
+/* Chat */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.chat-message {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.chat-message-sender {
+  font-weight: 600;
+  color: var(--gold-accent);
+  flex-shrink: 0;
+}
+
+.chat-message-content {
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.chat-input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: var(--gold-accent);
+}
+
+.chat-send-btn {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--gradient-cambridge);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chat-send-btn:hover {
+  opacity: 0.9;
+}
+
+/* Role Reveal */
+.role-card {
+  padding: var(--space-2xl);
+  text-align: center;
+  border-radius: var(--radius-xl);
+  animation: fadeIn 0.5s ease;
+}
+
+.role-card.student-union {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(36, 113, 163, 0.1) 100%);
+  border: 2px solid var(--student-union);
+}
+
+.role-card.chancellors-office {
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.2) 0%, rgba(146, 43, 33, 0.1) 100%);
+  border: 2px solid var(--admin);
+}
+
+.role-card.chancellor {
+  background: linear-gradient(135deg, rgba(196, 163, 90, 0.2) 0%, rgba(150, 125, 70, 0.1) 100%);
+  border: 2px solid var(--gold-accent);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.role-title {
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+
+.role-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Phase Banner */
+.phase-banner {
+  padding: var(--space-lg);
+  text-align: center;
+  background: var(--gradient-glass);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.phase-title {
+  font-size: 1.5rem;
+  color: var(--gold-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.phase-subtitle {
+  color: var(--text-secondary);
+}
+
+/* Timer */
+.timer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer.urgent {
+  color: var(--admin);
+  animation: pulse 1s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(196, 163, 90, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(196, 163, 90, 0.6);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease forwards;
+}
+
+.animate-glow {
+  animation: glow 2s ease infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: 0 var(--space-md);
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.35rem;
+  }
+  
+  .btn {
+    padding: var(--space-sm) var(--space-lg);
+  }
+  
+  .policy-card {
+    width: 60px;
+    height: 90px;
+  }
+  
+  .policy-slot {
+    width: 40px;
+    height: 56px;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cambridge-dark-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cambridge-blue);
+}
+
+/* Utility Classes */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.gap-lg {
+  gap: var(--space-lg);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .sm-hidden {
+    display: none;
   }
 }

@@ -1,0 +1,332 @@
+.container {
+    min-height: 100vh;
+    padding: var(--space-lg);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.title {
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.electionTracker {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.electionLabel {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.electionMarkers {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.electionMarker {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    transition: all var(--transition-normal);
+}
+
+.electionMarker.active {
+    background: var(--admin);
+    border-color: var(--admin);
+    color: white;
+}
+
+.electionWarning {
+    font-size: 0.75rem;
+    color: var(--admin-light);
+    animation: pulse 1s infinite;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--space-xl);
+}
+
+.leftPanel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+.tracks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-md);
+}
+
+.phasePanel {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+}
+
+.phaseContent {
+    animation: fadeIn 0.3s ease;
+}
+
+.phaseHeader {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.phaseTitle {
+    font-size: 1.5rem;
+    color: var(--gold-accent);
+    margin-bottom: var(--space-sm);
+}
+
+.phaseDescription {
+    color: var(--text-secondary);
+}
+
+.phaseDescription strong {
+    color: var(--gold-accent);
+}
+
+.rightPanel {
+    position: sticky;
+    top: var(--space-lg);
+    height: fit-content;
+}
+
+.waitingIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    color: var(--text-secondary);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--gold-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.governmentPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-lg);
+}
+
+.governmentMember {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.memberAvatar {
+    font-size: 2.5rem;
+}
+
+.memberName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.memberRole {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.governmentAnd {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+}
+
+.voteButtons {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+}
+
+.voteBtn {
+    min-width: 150px;
+}
+
+.votedMessage {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: var(--space-lg);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-xl);
+}
+
+.voteProgress {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.voteProgressLabel {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.policySelection {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+}
+
+.investigationResult {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.partyCard {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-md);
+}
+
+.suParty {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.3) 0%, rgba(36, 113, 163, 0.2) 100%);
+    border: 2px solid var(--student-union);
+}
+
+.adminParty {
+    background: linear-gradient(135deg, rgba(192, 57, 43, 0.3) 0%, rgba(146, 43, 33, 0.2) 100%);
+    border: 2px solid var(--admin);
+}
+
+.partyEmoji {
+    font-size: 3rem;
+}
+
+.partyName {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.investigationNote,
+.peekNote {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main {
+        grid-template-columns: 1fr;
+    }
+
+    .rightPanel {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: var(--space-md);
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .phasePanel {
+        padding: var(--space-md);
+    }
+
+    .governmentPreview {
+        flex-direction: column;
+    }
+
+    .governmentAnd {
+        transform: rotate(90deg);
+    }
+
+    .voteButtons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .voteBtn {
+        width: 100%;
+    }
+}

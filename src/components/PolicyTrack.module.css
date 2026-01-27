@@ -1,0 +1,151 @@
+.container {
+    padding: var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.title {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.suTitle {
+    color: var(--student-union);
+}
+
+.adminTitle {
+    color: var(--admin);
+}
+
+.counter {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.track {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.slot {
+    width: 50px;
+    height: 70px;
+    border-radius: var(--radius-sm);
+    border: 2px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.slot.filled {
+    border-style: solid;
+}
+
+.suSlot {
+    border-color: rgba(52, 152, 219, 0.4);
+}
+
+.suSlot.filled {
+    border-color: var(--student-union);
+    background: rgba(52, 152, 219, 0.15);
+}
+
+.adminSlot {
+    border-color: rgba(192, 57, 43, 0.4);
+}
+
+.adminSlot.filled {
+    border-color: var(--admin);
+    background: rgba(192, 57, 43, 0.15);
+}
+
+.policy {
+    font-size: 1.5rem;
+    animation: scaleIn 0.3s ease;
+}
+
+.suPolicy {
+    filter: drop-shadow(0 0 8px rgba(52, 152, 219, 0.5));
+}
+
+.adminPolicy {
+    filter: drop-shadow(0 0 8px rgba(192, 57, 43, 0.5));
+}
+
+.powerBadge {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.5rem;
+    padding: 2px 6px;
+    background: var(--gold-accent);
+    color: var(--ink);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.warning {
+    margin-top: var(--space-lg);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(192, 57, 43, 0.2);
+    border: 1px solid var(--admin);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--admin-light);
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 640px) {
+    .slot {
+        width: 40px;
+        height: 56px;
+    }
+
+    .policy {
+        font-size: 1.25rem;
+    }
+
+    .powerBadge {
+        font-size: 0.4rem;
+        bottom: -20px;
+    }
+}

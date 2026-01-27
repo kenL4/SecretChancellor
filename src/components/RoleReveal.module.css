@@ -1,0 +1,237 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.card {
+    width: 100%;
+    max-width: 500px;
+    padding: var(--space-2xl);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    animation: scaleIn 0.5s ease;
+}
+
+.studentUnion {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(36, 113, 163, 0.1) 100%);
+    border: 2px solid var(--student-union);
+    box-shadow: 0 0 40px rgba(52, 152, 219, 0.2);
+}
+
+.chancellorsOffice {
+    background: linear-gradient(135deg, rgba(192, 57, 43, 0.2) 0%, rgba(146, 43, 33, 0.1) 100%);
+    border: 2px solid var(--admin);
+    box-shadow: 0 0 40px rgba(192, 57, 43, 0.2);
+}
+
+.chancellor {
+    background: linear-gradient(135deg, rgba(196, 163, 90, 0.2) 0%, rgba(150, 125, 70, 0.1) 100%);
+    border: 2px solid var(--gold-accent);
+    box-shadow: 0 0 40px rgba(196, 163, 90, 0.3);
+    animation: scaleIn 0.5s ease, glow 2s ease infinite;
+}
+
+.header {
+    margin-bottom: var(--space-lg);
+}
+
+.emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: var(--space-md);
+    animation: float 3s ease infinite;
+}
+
+.title {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.studentUnion .title {
+    color: var(--student-union);
+}
+
+.chancellorsOffice .title {
+    color: var(--admin);
+}
+
+.chancellor .title {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-xl);
+}
+
+.objectives {
+    text-align: left;
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+}
+
+.objectivesTitle {
+    font-size: 0.875rem;
+    color: var(--gold-accent);
+    margin-bottom: var(--space-sm);
+}
+
+.objectivesList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.objective {
+    padding: var(--space-sm) 0;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    position: relative;
+    padding-left: var(--space-lg);
+}
+
+.objective::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold-accent);
+}
+
+.teammates {
+    text-align: left;
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md);
+    background: rgba(192, 57, 43, 0.1);
+    border: 1px solid var(--admin);
+    border-radius: var(--radius-md);
+}
+
+.teammatesTitle {
+    font-size: 0.875rem;
+    color: var(--admin-light);
+    margin-bottom: var(--space-md);
+}
+
+.teammatesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.teammate {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+}
+
+.teammateAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--admin) 0%, var(--admin-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.teammateInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.teammateName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.teammateRole {
+    font-size: 0.75rem;
+    color: var(--admin-light);
+}
+
+.warning {
+    padding: var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: var(--space-xl);
+    animation: pulse 2s infinite;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 40px rgba(196, 163, 90, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 60px rgba(196, 163, 90, 0.5);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 640px) {
+    .card {
+        padding: var(--space-xl);
+    }
+
+    .emoji {
+        font-size: 3rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

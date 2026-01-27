@@ -1,0 +1,107 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.header {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.emptyMessage {
+    color: var(--text-muted);
+    text-align: center;
+    font-style: italic;
+    padding: var(--space-lg);
+}
+
+.message {
+    display: flex;
+    gap: var(--space-sm);
+    animation: slideIn 0.2s ease;
+}
+
+.ownMessage .sender {
+    color: var(--cambridge-blue);
+}
+
+.sender {
+    font-weight: 600;
+    color: var(--gold-accent);
+    flex-shrink: 0;
+}
+
+.content {
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.inputContainer {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.input {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    outline: none;
+    font-family: inherit;
+}
+
+.input:focus {
+    border-color: var(--gold-accent);
+}
+
+.sendBtn {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--gradient-cambridge);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 600;
+}
+
+.sendBtn:hover {
+    opacity: 0.9;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
