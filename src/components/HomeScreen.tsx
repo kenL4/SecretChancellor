@@ -175,7 +175,7 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
                 )}
 
                 <footer className={styles.footer}>
-                    <p>Inspired by Secret Hitler • Cambridge University Theme</p>
+                    <p>Cambridge University</p>
                 </footer>
             </div>
         </div>

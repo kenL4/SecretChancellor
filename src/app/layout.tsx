@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Secret Chancellor | Cambridge University Social Deduction Game",
-  description: "A multiplayer social deduction game inspired by Secret Hitler, with a Cambridge University theme. Discover secret roles, enact policies, and uncover the Chancellor!",
+  description: "A multiplayer social deduction game, with a Cambridge University theme. Discover secret roles, enact policies, and uncover the Chancellor!",
   keywords: ["social deduction", "multiplayer game", "secret hitler", "cambridge", "party game", "online game"],
   authors: [{ name: "Secret Chancellor Team" }],
   openGraph: {

@@ -1,6 +1,6 @@
 # 🎓 Secret Chancellor
 
-A web-based multiplayer social deduction game with a Cambridge University theme, inspired by Secret Hitler.
+A web-based multiplayer social deduction game with a Cambridge University theme.
 
 ## 🎮 Game Overview
 
