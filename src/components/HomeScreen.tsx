@@ -21,6 +21,11 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
         }
     }, [initialGameId]);
 
+    const handleBackToMenu = () => {
+        setMode('menu');
+        setGameId(''); // Clear the game code when going back to menu
+    };
+
     const handleCreate = () => {
         if (playerName.trim().length >= 2) {
             createGame(playerName.trim());
@@ -106,7 +111,7 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
 
                 {isConnected && mode === 'create' && (
                     <div className={styles.form}>
-                        <button className={styles.backBtn} onClick={() => setMode('menu')}>
+                        <button className={styles.backBtn} onClick={handleBackToMenu}>
                             ← Back
                         </button>
                         <h2 className={styles.formTitle}>Create New Game</h2>
@@ -135,7 +140,7 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
 
                 {isConnected && mode === 'join' && (
                     <div className={styles.form}>
-                        <button className={styles.backBtn} onClick={() => setMode('menu')}>
+                        <button className={styles.backBtn} onClick={handleBackToMenu}>
                             ← Back
                         </button>
                         <h2 className={styles.formTitle}>Join Game</h2>
