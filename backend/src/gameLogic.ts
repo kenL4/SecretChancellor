@@ -1,6 +1,7 @@
 // Game Logic for Secret Chancellor (backend)
+// Uses Node built-in crypto.randomUUID() (Node 18+) to avoid ESM/CommonJS issues
 
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 import {
   GameState,
   Player,
@@ -20,10 +21,10 @@ const ADMIN_POLICY_NAMES = ['Tuition ↑', 'Library Cuts', 'CCTV', 'Ban Protests
 export function createPolicyDeck(): Policy[] {
   const deck: Policy[] = [];
   for (let i = 0; i < 6; i++) {
-    deck.push({ id: uuidv4(), type: PolicyType.STUDENT_UNION, name: SU_POLICY_NAMES[i % SU_POLICY_NAMES.length] });
+    deck.push({ id: crypto.randomUUID(), type: PolicyType.STUDENT_UNION, name: SU_POLICY_NAMES[i % SU_POLICY_NAMES.length] });
   }
   for (let i = 0; i < 11; i++) {
-    deck.push({ id: uuidv4(), type: PolicyType.ADMIN, name: ADMIN_POLICY_NAMES[i % ADMIN_POLICY_NAMES.length] });
+    deck.push({ id: crypto.randomUUID(), type: PolicyType.ADMIN, name: ADMIN_POLICY_NAMES[i % ADMIN_POLICY_NAMES.length] });
   }
   return shuffleArray(deck);
 }
@@ -49,7 +50,7 @@ export function assignRoles(players: Player[]): Player[] {
 }
 
 export function createGame(hostId: string, hostName: string): GameState {
-  const gameId = uuidv4().substring(0, 6).toUpperCase();
+  const gameId = crypto.randomUUID().replace(/-/g, '').substring(0, 6).toUpperCase();
   return {
     gameId,
     players: [{ id: hostId, name: hostName, isAlive: true, isViceChancellor: false, isPolicyChair: false, hasBeenInvestigated: false, vote: null, connected: true }],
@@ -339,7 +340,7 @@ export function executePlayer(game: GameState, vcId: string, targetId: string): 
 export function addChatMessage(game: GameState, playerId: string, message: string): GameState {
   const player = game.players.find(p => p.id === playerId);
   if (!player) return game;
-  const chatMessage: ChatMessage = { id: uuidv4(), playerId, playerName: player.name, message, timestamp: Date.now() };
+  const chatMessage: ChatMessage = { id: crypto.randomUUID(), playerId, playerName: player.name, message, timestamp: Date.now() };
   return { ...game, messages: [...game.messages, chatMessage].slice(-100) };
 }
 

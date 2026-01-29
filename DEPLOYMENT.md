@@ -71,8 +71,8 @@ sudo apt install -y nodejs
 
 ```bash
 cd ~
-git clone https://github.com/YOUR_ORG/secret-chancellor.git
-cd secret-chancellor/backend
+git clone https://github.com/kenL4/SecretChancellor.git
+cd SecretChancellor/backend
 npm install
 npm run build
 ```
@@ -93,7 +93,7 @@ Set your frontend origin for CORS (use your Vercel URL when you have it):
 ```bash
 cd ~/secret-chancellor/backend
 export PORT=4000
-export CORS_ORIGIN=https://your-app.vercel.app
+export CORS_ORIGIN=https://secret-chancellor.vercel.app
 npm start
 ```
 
