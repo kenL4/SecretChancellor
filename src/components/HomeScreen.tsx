@@ -205,7 +205,7 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
                 )}
 
                 <footer className={styles.footer}>
-                    <p>Cambridge University</p>
+                    <p>Not affiliated with Cambridge University</p>
                 </footer>
             </div>
         </div>
