@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { PolicyType, ExecutiveAction } from '@/lib/gameTypes';
+import { ExecutiveAction, Policy } from '@/lib/gameTypes';
 import styles from './PolicyTrack.module.css';
 
 interface PolicyTrackProps {
     type: 'student_union' | 'admin';
-    count: number;
+    policies: Policy[];
     playerCount: number;
 }
 
@@ -20,14 +20,15 @@ const ADMIN_POWERS: { [players: number]: (ExecutiveAction | null)[] } = {
 };
 
 const POWER_LABELS: { [key in ExecutiveAction]?: string } = {
-    [ExecutiveAction.INVESTIGATE]: '🔍 Investigate',
-    [ExecutiveAction.SPECIAL_ELECTION]: '🗳️ Special Election',
-    [ExecutiveAction.PEEK_POLICIES]: '👁️ Peek',
-    [ExecutiveAction.EXECUTION]: '☠️ Execution'
+    [ExecutiveAction.INVESTIGATE]: '🔍',
+    [ExecutiveAction.SPECIAL_ELECTION]: '🗳️',
+    [ExecutiveAction.PEEK_POLICIES]: '👁️',
+    [ExecutiveAction.EXECUTION]: '🚫'
 };
 
-export default function PolicyTrack({ type, count, playerCount }: PolicyTrackProps) {
+export default function PolicyTrack({ type, policies, playerCount }: PolicyTrackProps) {
     const isAdmin = type === 'admin';
+    const count = policies.length;
     const maxPolicies = isAdmin ? 6 : 5;
     const powers = isAdmin ? ADMIN_POWERS[playerCount] || ADMIN_POWERS[5] : [];
 
@@ -35,7 +36,7 @@ export default function PolicyTrack({ type, count, playerCount }: PolicyTrackPro
         <div className={styles.container}>
             <div className={styles.header}>
                 <span className={`${styles.title} ${isAdmin ? styles.adminTitle : styles.suTitle}`}>
-                    {isAdmin ? '🏛️ Admin Track' : '📚 Student Union Track'}
+                    {isAdmin ? '🏛️ University Admin' : '📚 Student Union'}
                 </span>
                 <span className={styles.counter}>
                     {count} / {maxPolicies}
@@ -44,18 +45,23 @@ export default function PolicyTrack({ type, count, playerCount }: PolicyTrackPro
 
             <div className={styles.track}>
                 {Array.from({ length: maxPolicies }).map((_, index) => {
-                    const isFilled = index < count;
+                    const policy = policies[index]; // Use the actual policy object if present
+                    const isFilled = !!policy;
                     const power = isAdmin && index < powers.length ? powers[index] : null;
 
                     return (
                         <div
                             key={index}
-                            className={`${styles.slot} ${isFilled ? styles.filled : ''} ${isAdmin ? styles.adminSlot : styles.suSlot
-                                }`}
+                            className={`${styles.slot} ${isFilled ? styles.filled : ''} ${isAdmin ? styles.adminSlot : styles.suSlot}`}
                         >
-                            {isFilled && (
+                            {isFilled ? (
                                 <div className={`${styles.policy} ${isAdmin ? styles.adminPolicy : styles.suPolicy}`}>
-                                    {isAdmin ? '🏛️' : '📚'}
+                                    <span className={styles.policyIcon}>{isAdmin ? '🏛️' : '📚'}</span>
+                                    <span className={styles.policyName}>{policy.name}</span>
+                                </div>
+                            ) : (
+                                <div className={styles.emptySlot}>
+                                    <span className={styles.slotPlaceholder}>—</span>
                                 </div>
                             )}
                             {power && (
@@ -70,7 +76,7 @@ export default function PolicyTrack({ type, count, playerCount }: PolicyTrackPro
 
             {isAdmin && count >= 3 && (
                 <div className={styles.warning}>
-                    ⚠️ Chancellor election now ends the game!
+                    ⚠️ Chancellor = Game Over!
                 </div>
             )}
         </div>

@@ -42,43 +42,49 @@ export interface Player {
   connected: boolean;
 }
 
+export interface Policy {
+  id: string; // Unique ID to track specific cards
+  type: PolicyType;
+  name: string; // The specific policy name (e.g. "Tuition Fees")
+}
+
 export interface GameState {
   gameId: string;
   players: Player[];
   hostId: string;
   phase: GamePhase;
-  
-  // Policy tracks
-  studentUnionPolicies: number;
-  adminPolicies: number;
-  
+
+  // Policy tracks - stores the full policy objects enacted
+  studentUnionPolicies: Policy[];
+  adminPolicies: Policy[];
+
   // Policy deck
-  policyDeck: PolicyType[];
-  discardPile: PolicyType[];
-  
+  policyDeck: Policy[];
+  discardPile: Policy[];
+
   // Current round
   currentViceChancellorIndex: number;
   nominatedChairId: string | null;
-  drawnPolicies: PolicyType[];
-  policiesForChair: PolicyType[];
-  
+  drawnPolicies: Policy[];
+  policiesForChair: Policy[];
+
   // Election tracker
   failedElections: number;
   lastViceChancellorId: string | null;
   lastChairId: string | null;
-  
+
   // Executive action state
   pendingExecutiveAction: ExecutiveAction | null;
   investigatedPlayerId: string | null;
-  peekedPolicies: PolicyType[];
-  
+  peekedPolicies: Policy[];
+
   // Game outcome
   winner: 'STUDENT_UNION' | 'ADMIN' | null;
   winReason: string | null;
-  
+
   // Chat
   messages: ChatMessage[];
-  
+
   // Timer
   phaseEndTime: number | null;
   phaseDuration: number;

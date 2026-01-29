@@ -47,7 +47,7 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
             <div className={styles.content}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Secret Chancellor</h1>
-                    <p className={styles.subtitle}>A Cambridge University Social Deduction Game</p>
+                    <p className={styles.subtitle}>Deception & Debate in the Halls of Cambridge</p>
                 </div>
 
                 {!isConnected && (
@@ -74,37 +74,62 @@ export default function HomeScreen({ initialGameId }: HomeScreenProps) {
                         </button>
 
                         <div className={styles.rules}>
-                            <h3 className={styles.rulesTitle}>📜 How to Play</h3>
+                            <h3 className={styles.rulesTitle}>📜 The Cambridge Conspiracy</h3>
+                            <p className={styles.rulesIntro}>
+                                A committee for the future of the University gathers at a formal dinner...
+                            </p>
+
+                            <div className={styles.teamsSection}>
+                                <div className={styles.team}>
+                                    <span className={styles.teamIcon}>📚</span>
+                                    <div className={styles.teamInfo}>
+                                        <strong>The Student Union</strong>
+                                        <span>Defenders of academic freedom, fighting to keep education accessible to all.</span>
+                                    </div>
+                                </div>
+                                <div className={styles.team}>
+                                    <span className={styles.teamIcon}>🏛️</span>
+                                    <div className={styles.teamInfo}>
+                                        <strong>The University Admin</strong>
+                                        <span>University bureaucrats, prioritising their own profit over student welfare.</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className={styles.rulesList}>
                                 <div className={styles.rule}>
                                     <span className={styles.ruleIcon}>👥</span>
                                     <div className={styles.ruleText}>
-                                        <strong>5-10 Players</strong>
-                                        <span>Secret roles: Student Union, Chancellor's Office, or the Chancellor</span>
+                                        <strong>5-10 Scholars Required</strong>
+                                        <span>Each player is secretly assigned to the Student Union or University Admin. One player is the hidden Chancellor.</span>
                                     </div>
                                 </div>
                                 <div className={styles.rule}>
                                     <span className={styles.ruleIcon}>🗳️</span>
                                     <div className={styles.ruleText}>
-                                        <strong>Elect Governments</strong>
-                                        <span>Vice-Chancellor nominates, everyone votes</span>
+                                        <strong>Elect Your Committee</strong>
+                                        <span>The Vice-Chancellor nominates a Policy Chair. All scholars vote "Aye" or "Nay" in true Union fashion.</span>
                                     </div>
                                 </div>
                                 <div className={styles.rule}>
                                     <span className={styles.ruleIcon}>📜</span>
                                     <div className={styles.ruleText}>
-                                        <strong>Enact Policies</strong>
-                                        <span>Draw 3 → Discard 1 → Pass 2 → Enact 1</span>
+                                        <strong>Debate & Legislate</strong>
+                                        <span>Draw 3 policies, discard 1 secretly, pass 2 to the Chair who enacts 1. Trust no one - they may be lying about what they saw!</span>
                                     </div>
                                 </div>
                                 <div className={styles.rule}>
                                     <span className={styles.ruleIcon}>🏆</span>
                                     <div className={styles.ruleText}>
-                                        <strong>Win Conditions</strong>
-                                        <span>SU: 5 policies or execute Chancellor. Admin: 6 policies or elect Chancellor</span>
+                                        <strong>Victory Conditions</strong>
+                                        <span>Student Union wins by passing 5 SU policies or exposing the Chancellor. University Admin wins by passing 6 Admin policies or electing the Chancellor as Chair after 3 Admin policies.</span>
                                     </div>
                                 </div>
                             </div>
+
+                            <p className={styles.rulesTagline}>
+                                🎓 Bluff, deduce, and persuade your way to save the University!
+                            </p>
                         </div>
                     </div>
                 )}

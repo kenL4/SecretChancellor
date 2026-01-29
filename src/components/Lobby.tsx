@@ -17,7 +17,7 @@ export default function Lobby() {
         <div className={styles.container}>
             <div className={styles.card}>
                 <div className={styles.header}>
-                    <h2 className={styles.title}>🎓 Game Lobby</h2>
+                    <h2 className={styles.title}>🎓 The Committee Awaits</h2>
                     <div className={styles.gameCode}>
                         <span className={styles.codeLabel}>Game Code:</span>
                         <span className={styles.code}>{gameState.gameId}</span>
@@ -34,7 +34,7 @@ export default function Lobby() {
 
                 <div className={styles.shareSection}>
                     <p className={styles.shareText}>
-                        Share this link with your friends:
+                        Invite your fellow scholars to join:
                     </p>
                     <div className={styles.shareLink}>
                         <input
@@ -58,9 +58,9 @@ export default function Lobby() {
 
                 <div className={styles.playersSection}>
                     <h3 className={styles.playersTitle}>
-                        Players ({playerCount}/10)
+                        Scholars Assembled ({playerCount}/10)
                         {playerCount < 5 && (
-                            <span className={styles.minPlayers}>Need at least 5 to start</span>
+                            <span className={styles.minPlayers}>Need at least 5 to convene</span>
                         )}
                     </h3>
 
@@ -79,7 +79,7 @@ export default function Lobby() {
                                     {player.id === playerId && <span className={styles.youTag}> (You)</span>}
                                 </span>
                                 {player.id === gameState.hostId && (
-                                    <span className={styles.hostBadge}>Host</span>
+                                    <span className={styles.hostBadge}>Master</span>
                                 )}
                                 {!player.connected && (
                                     <span className={styles.offlineBadge}>Offline</span>
@@ -90,7 +90,7 @@ export default function Lobby() {
                         {Array.from({ length: Math.max(0, 5 - playerCount) }).map((_, i) => (
                             <div key={`empty-${i}`} className={styles.emptySlot}>
                                 <span className={styles.emptyIcon}>+</span>
-                                <span className={styles.emptyText}>Waiting for player...</span>
+                                <span className={styles.emptyText}>Awaiting scholar...</span>
                             </div>
                         ))}
                     </div>
@@ -125,10 +125,10 @@ export default function Lobby() {
                             onClick={startGame}
                             disabled={!canStart}
                         >
-                            {canStart ? '🚀 Start Game' : `Need ${5 - playerCount} more players`}
+                            {canStart ? '🚀 Convene the Committee' : `Need ${5 - playerCount} more scholars`}
                         </button>
                     ) : (
-                        <p className={styles.waitingText}>Waiting for host to start the game...</p>
+                        <p className={styles.waitingText}>Awaiting the Master's call to convene...</p>
                     )}
 
                     <button className={`btn btn-secondary ${styles.leaveBtn}`} onClick={leaveGame}>

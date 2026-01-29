@@ -10,14 +10,36 @@ import {
     ExecutiveAction,
     EXECUTIVE_ACTIONS,
     ROLE_DISTRIBUTION,
-    ChatMessage
+    ChatMessage,
+    Policy
 } from './gameTypes';
 
+// Student-relatable policy names
+const SU_POLICY_NAMES = ['Free Formals', 'Lower Rent', '24/7 Library', 'Student Voice', 'Free Printing', 'Exam Reform', 'Mental Health', 'Bike Lanes', 'No Supervision', 'Bar Prices ↓'];
+const ADMIN_POLICY_NAMES = ['Tuition ↑', 'Library Cuts', 'CCTV', 'Ban Protests', 'Rent ↑', 'Gate Hours', 'Formal Rules', 'Supervision+', 'Budget Cuts', 'More Exams', 'Curfew'];
+
 // Create initial policy deck (6 SU + 11 Admin = 17 policies)
-export function createPolicyDeck(): PolicyType[] {
-    const deck: PolicyType[] = [];
-    for (let i = 0; i < 6; i++) deck.push(PolicyType.STUDENT_UNION);
-    for (let i = 0; i < 11; i++) deck.push(PolicyType.ADMIN);
+export function createPolicyDeck(): Policy[] {
+    const deck: Policy[] = [];
+
+    // Create 6 SU policies with names
+    for (let i = 0; i < 6; i++) {
+        deck.push({
+            id: uuidv4(),
+            type: PolicyType.STUDENT_UNION,
+            name: SU_POLICY_NAMES[i % SU_POLICY_NAMES.length]
+        });
+    }
+
+    // Create 11 Admin policies with names
+    for (let i = 0; i < 11; i++) {
+        deck.push({
+            id: uuidv4(),
+            type: PolicyType.ADMIN,
+            name: ADMIN_POLICY_NAMES[i % ADMIN_POLICY_NAMES.length]
+        });
+    }
+
     return shuffleArray(deck);
 }
 
@@ -83,8 +105,8 @@ export function createGame(hostId: string, hostName: string): GameState {
         }],
         hostId,
         phase: GamePhase.LOBBY,
-        studentUnionPolicies: 0,
-        adminPolicies: 0,
+        studentUnionPolicies: [],
+        adminPolicies: [],
         policyDeck: [],
         discardPile: [],
         currentViceChancellorIndex: 0,
@@ -153,6 +175,9 @@ export function startGame(game: GameState): GameState {
         ...game,
         players: playersWithRoles,
         policyDeck: createPolicyDeck(),
+        discardPile: [],
+        studentUnionPolicies: [],
+        adminPolicies: [],
         phase: GamePhase.ROLE_REVEAL,
         currentViceChancellorIndex: startingVCIndex,
         phaseEndTime: Date.now() + 10000 // 10 seconds for role reveal
@@ -281,7 +306,7 @@ function processElectionSuccess(game: GameState): GameState {
     }
 
     // Check Chancellor win condition
-    if (game.adminPolicies >= 3 && chair.role === Role.CHANCELLOR) {
+    if (game.adminPolicies.length >= 3 && chair.role === Role.CHANCELLOR) {
         return {
             ...game,
             phase: GamePhase.GAME_OVER,
@@ -430,14 +455,14 @@ export function chairEnactPolicy(game: GameState, chairId: string, policyIndex: 
 }
 
 // Enact a policy and check win conditions
-function enactPolicy(game: GameState, policy: PolicyType, isChaos: boolean): GameState {
+function enactPolicy(game: GameState, policy: Policy, isChaos: boolean): GameState {
     let newGame = { ...game };
 
-    if (policy === PolicyType.STUDENT_UNION) {
-        newGame.studentUnionPolicies++;
+    if (policy.type === PolicyType.STUDENT_UNION) {
+        newGame.studentUnionPolicies = [...newGame.studentUnionPolicies, policy];
 
         // Check SU win
-        if (newGame.studentUnionPolicies >= 5) {
+        if (newGame.studentUnionPolicies.length >= 5) {
             return {
                 ...newGame,
                 phase: GamePhase.GAME_OVER,
@@ -446,10 +471,10 @@ function enactPolicy(game: GameState, policy: PolicyType, isChaos: boolean): Gam
             };
         }
     } else {
-        newGame.adminPolicies++;
+        newGame.adminPolicies = [...newGame.adminPolicies, policy];
 
         // Check Admin win
-        if (newGame.adminPolicies >= 6) {
+        if (newGame.adminPolicies.length >= 6) {
             return {
                 ...newGame,
                 phase: GamePhase.GAME_OVER,
@@ -461,7 +486,8 @@ function enactPolicy(game: GameState, policy: PolicyType, isChaos: boolean): Gam
         // Check for executive action (no action on chaos)
         if (!isChaos) {
             const numPlayers = game.players.length;
-            const actionIndex = newGame.adminPolicies - 1;
+            // policy 1 => index 0
+            const actionIndex = newGame.adminPolicies.length - 1;
             const action = EXECUTIVE_ACTIONS[numPlayers]?.[actionIndex] || ExecutiveAction.NONE;
 
             if (action !== ExecutiveAction.NONE) {
@@ -606,26 +632,26 @@ export function specialElection(game: GameState, vcId: string, targetId: string)
     };
 }
 
-// Execute a player
+// Ban a player
 export function executePlayer(game: GameState, vcId: string, targetId: string): GameState {
     const vc = game.players.find(p => p.id === vcId);
     const target = game.players.find(p => p.id === targetId);
 
     if (!vc || !vc.isViceChancellor) {
-        throw new Error('Only Vice-Chancellor can execute');
+        throw new Error('Only Vice-Chancellor can ban');
     }
 
     if (!target || !target.isAlive || targetId === vcId) {
         throw new Error('Invalid execution target');
     }
 
-    // Check if Chancellor was executed - SU wins!
+    // Check if Chancellor was banned - SU wins!
     if (target.role === Role.CHANCELLOR) {
         return {
             ...game,
             phase: GamePhase.GAME_OVER,
             winner: 'STUDENT_UNION',
-            winReason: 'The Chancellor has been executed!'
+            winReason: 'The Chancellor has been banned!'
         };
     }
 

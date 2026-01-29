@@ -66,11 +66,11 @@ export default function GameOver() {
 
                 <div className={styles.stats}>
                     <div className={styles.stat}>
-                        <span className={styles.statValue}>{gameState.studentUnionPolicies}</span>
+                        <span className={styles.statValue}>{gameState.studentUnionPolicies.length}</span>
                         <span className={styles.statLabel}>SU Policies</span>
                     </div>
                     <div className={styles.stat}>
-                        <span className={styles.statValue}>{gameState.adminPolicies}</span>
+                        <span className={styles.statValue}>{gameState.adminPolicies.length}</span>
                         <span className={styles.statLabel}>Admin Policies</span>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ function getRoleInfo(role?: Role) {
         case Role.STUDENT_UNION:
             return { name: 'Student Union', emoji: '📚', className: 'suRole' };
         case Role.CHANCELLORS_OFFICE:
-            return { name: "Chancellor's Office", emoji: '🏛️', className: 'coRole' };
+            return { name: "University Admin", emoji: '🏛️', className: 'coRole' };
         case Role.CHANCELLOR:
             return { name: 'Chancellor', emoji: '👑', className: 'chancellorRole' };
         default:

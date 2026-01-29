@@ -16,11 +16,11 @@ A web-based multiplayer social deduction game with a Cambridge University theme.
 
 **Student Union Wins:**
 - Enact 5 Student Union policies, OR
-- Execute the Chancellor
+- Ban the Chancellor
 
-**Admin Wins:**
-- Enact 6 Admin policies, OR
-- Elect the Chancellor as Policy Chair after 3 Admin policies are enacted
+**University Admin Wins:**
+- Enact 6 University Admin policies, OR
+- Elect the Chancellor as Policy Chair after 3 University Admin policies are enacted
 
 ## 🚀 Getting Started
 

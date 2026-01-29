@@ -1,4 +1,4 @@
-/* Secret Chancellor - Cambridge University Theme */
+/* Secret Chancellor - Cambridge Formal Hall Theme */
 
 /* CSS Custom Properties */
 :root {
@@ -7,10 +7,17 @@
   --cambridge-dark-blue: #1a4d5c;
   --oxford-blue: #002147;
   --university-red: #8b0000;
-  --gold-accent: #c4a35a;
+  --gold-accent: #d4af37;
+  --gold-light: #f0d875;
   --parchment: #f5f0e6;
   --ink: #1a1a1a;
-  
+
+  /* Formal Hall Colors */
+  --mahogany: #3d1c0d;
+  --dark-wood: #2a1509;
+  --candlelight: #ffb347;
+  --candlelight-glow: rgba(255, 179, 71, 0.15);
+
   /* Policy Colors */
   --student-union: #3498db;
   --student-union-light: #5dade2;
@@ -18,47 +25,56 @@
   --admin: #c0392b;
   --admin-light: #e74c3c;
   --admin-dark: #922b21;
-  
-  /* UI Colors */
-  --bg-primary: #0f1419;
-  --bg-secondary: #1a2332;
-  --bg-tertiary: #243447;
-  --bg-card: rgba(26, 35, 50, 0.9);
+
+  /* UI Colors - Warm wood tones */
+  --bg-primary: #2a1810;
+  --bg-secondary: #3d261a;
+  --bg-tertiary: #4a3020;
+  --bg-card: rgba(58, 38, 26, 0.95);
   --text-primary: #f5f0e6;
-  --text-secondary: #a0a8b0;
-  --text-muted: #6b7280;
-  --border-color: rgba(164, 193, 173, 0.2);
-  --border-highlight: rgba(196, 163, 90, 0.4);
-  
+  --text-secondary: #d4c8b8;
+  --text-muted: #a08060;
+  --border-color: rgba(212, 175, 55, 0.2);
+  --border-highlight: rgba(212, 175, 55, 0.5);
+
+  /* Table Colors */
+  --table-wood: #5c3d2e;
+  --table-wood-light: #6b4c3a;
+  --table-wood-dark: #4a2e20;
+  --table-cloth: #1a4d3a;
+
   /* Gradients */
-  --gradient-gold: linear-gradient(135deg, #c4a35a 0%, #e8d5a8 50%, #c4a35a 100%);
+  --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0d875 50%, #d4af37 100%);
   --gradient-cambridge: linear-gradient(135deg, #1a4d5c 0%, #2d7a8c 100%);
-  --gradient-dark: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-  
+  --gradient-dark: linear-gradient(180deg, #2a1810 0%, #3d261a 50%, #2a1810 100%);
+  --gradient-wood: linear-gradient(180deg, #4a3020 0%, #3d261a 50%, #2a1810 100%);
+  --gradient-table: linear-gradient(180deg, #6b4c3a 0%, #5c3d2e 50%, #4a2e20 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+
   /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-glow-gold: 0 0 20px rgba(196, 163, 90, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-glow-gold: 0 0 30px rgba(212, 175, 55, 0.4);
+  --shadow-glow-candle: 0 0 40px rgba(255, 179, 71, 0.2);
   --shadow-glow-blue: 0 0 20px rgba(52, 152, 219, 0.3);
   --shadow-glow-red: 0 0 20px rgba(192, 57, 43, 0.3);
-  
+
   /* Border Radius */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-xl: 30px;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
   --transition-slow: 500ms ease;
-  
+
   /* Typography */
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
-  
+
   /* Spacing */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -69,7 +85,9 @@
 }
 
 /* Reset & Base */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -90,7 +108,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Background Pattern */
+/* Formal Hall Background - Wood Paneling */
 body::before {
   content: '';
   position: fixed;
@@ -98,16 +116,38 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(163, 193, 173, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(196, 163, 90, 0.05) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4a35a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image:
+    /* Candlelight glow - brighter */
+    radial-gradient(ellipse at 10% 10%, rgba(255, 200, 100, 0.15) 0%, transparent 35%),
+    radial-gradient(ellipse at 90% 10%, rgba(255, 200, 100, 0.12) 0%, transparent 30%),
+    radial-gradient(ellipse at 50% 5%, rgba(255, 220, 150, 0.1) 0%, transparent 35%),
+    radial-gradient(ellipse at 30% 90%, rgba(255, 180, 80, 0.08) 0%, transparent 25%),
+    radial-gradient(ellipse at 70% 90%, rgba(255, 180, 80, 0.08) 0%, transparent 25%),
+    /* Wood grain horizontal lines */
+    repeating-linear-gradient(0deg,
+      transparent 0px,
+      transparent 40px,
+      rgba(0, 0, 0, 0.05) 40px,
+      rgba(0, 0, 0, 0.05) 41px),
+    /* Subtle wood color variation */
+    repeating-linear-gradient(90deg,
+      transparent 0px,
+      transparent 200px,
+      rgba(255, 200, 100, 0.03) 200px,
+      rgba(255, 200, 100, 0.03) 201px),
+    /* Decorative pattern */
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
   z-index: -1;
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -704,6 +744,7 @@ a:hover {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -711,9 +752,12 @@ a:hover {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -724,6 +768,7 @@ a:hover {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -735,6 +780,7 @@ a:hover {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -742,9 +788,12 @@ a:hover {
 }
 
 @keyframes glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 10px rgba(196, 163, 90, 0.3);
   }
+
   50% {
     box-shadow: 0 0 25px rgba(196, 163, 90, 0.6);
   }
@@ -771,28 +820,28 @@ a:hover {
   :root {
     font-size: 14px;
   }
-  
+
   .container {
     padding: 0 var(--space-md);
   }
-  
+
   h1 {
     font-size: 1.75rem;
   }
-  
+
   h2 {
     font-size: 1.35rem;
   }
-  
+
   .btn {
     padding: var(--space-sm) var(--space-lg);
   }
-  
+
   .policy-card {
     width: 60px;
     height: 90px;
   }
-  
+
   .policy-slot {
     width: 40px;
     height: 56px;

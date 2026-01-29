@@ -35,11 +35,12 @@
     display: flex;
     gap: var(--space-sm);
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .slot {
-    width: 50px;
-    height: 70px;
+    width: 70px;
+    height: 85px;
     border-radius: var(--radius-sm);
     border: 2px dashed var(--border-color);
     display: flex;
@@ -47,6 +48,7 @@
     justify-content: center;
     position: relative;
     transition: all var(--transition-normal);
+    flex-shrink: 0;
 }
 
 .slot.filled {
@@ -72,8 +74,27 @@
 }
 
 .policy {
-    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
     animation: scaleIn 0.3s ease;
+}
+
+.policyIcon {
+    font-size: 1.5rem;
+}
+
+.policyName {
+    font-size: 0.55rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--text-primary);
+    max-width: 60px;
+    word-wrap: break-word;
 }
 
 .suPolicy {
@@ -84,12 +105,25 @@
     filter: drop-shadow(0 0 8px rgba(192, 57, 43, 0.5));
 }
 
+.emptySlot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+}
+
+.slotPlaceholder {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
 .powerBadge {
     position: absolute;
-    bottom: -24px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     padding: 2px 6px;
     background: var(--gold-accent);
     color: var(--ink);
@@ -134,18 +168,55 @@
     }
 }
 
-@media (max-width: 640px) {
+/* Tablet */
+@media (max-width: 768px) {
     .slot {
-        width: 40px;
-        height: 56px;
+        width: 55px;
+        height: 70px;
     }
 
-    .policy {
+    .policyIcon {
         font-size: 1.25rem;
     }
 
-    .powerBadge {
+    .policyName {
+        font-size: 0.45rem;
+        max-width: 48px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .track {
+        gap: 4px;
+    }
+
+    .slot {
+        width: 52px;
+        height: 65px;
+    }
+
+    .policyIcon {
+        font-size: 0.9rem;
+    }
+
+    .policyName {
         font-size: 0.4rem;
-        bottom: -20px;
+        max-width: 45px;
+    }
+
+    .slotPlaceholder {
+        font-size: 0.75rem;
+    }
+
+    .powerBadge {
+        font-size: 0.55rem;
+        bottom: -8px;
+        padding: 1px 3px;
+    }
+
+    .warning {
+        font-size: 0.65rem;
+        padding: var(--space-xs) var(--space-sm);
     }
 }

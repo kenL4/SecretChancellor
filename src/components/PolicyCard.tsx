@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { PolicyType } from '@/lib/gameTypes';
+import { Policy, PolicyType } from '@/lib/gameTypes';
 import styles from './PolicyCard.module.css';
 
 interface PolicyCardProps {
-    type: PolicyType | 'hidden';
+    policy: Policy | 'hidden';
     onClick?: () => void;
     disabled?: boolean;
     selected?: boolean;
@@ -13,15 +13,16 @@ interface PolicyCardProps {
 }
 
 export default function PolicyCard({
-    type,
+    policy,
     onClick,
     disabled = false,
     selected = false,
     size = 'medium'
 }: PolicyCardProps) {
-    const isHidden = type === 'hidden';
-    const isStudentUnion = type === PolicyType.STUDENT_UNION;
-    const isAdmin = type === PolicyType.ADMIN;
+    const isHidden = policy === 'hidden';
+    const isStudentUnion = !isHidden && policy.type === PolicyType.STUDENT_UNION;
+    const isAdmin = !isHidden && policy.type === PolicyType.ADMIN;
+    const policyName = !isHidden ? policy.name : '';
 
     return (
         <div
@@ -34,19 +35,19 @@ export default function PolicyCard({
                 {isStudentUnion && (
                     <>
                         <span className={styles.icon}>📚</span>
-                        <span className={styles.label}>Student Union</span>
+                        <span className={styles.label}>{policyName}</span>
                     </>
                 )}
                 {isAdmin && (
                     <>
                         <span className={styles.icon}>🏛️</span>
-                        <span className={styles.label}>Admin</span>
+                        <span className={styles.label}>{policyName}</span>
                     </>
                 )}
                 {isHidden && (
                     <>
-                        <span className={styles.icon}>❓</span>
-                        <span className={styles.label}>Policy</span>
+                        <span className={styles.icon}>📜</span>
+                        <span className={styles.label}>Sealed</span>
                     </>
                 )}
             </div>
@@ -55,7 +56,7 @@ export default function PolicyCard({
 }
 
 interface PolicyCardGroupProps {
-    policies: PolicyType[];
+    policies: Policy[];
     onSelect?: (index: number) => void;
     selectedIndex?: number | null;
     disabled?: boolean;
@@ -74,7 +75,7 @@ export function PolicyCardGroup({
             {policies.map((policy, index) => (
                 <PolicyCard
                     key={index}
-                    type={showHidden ? 'hidden' : policy}
+                    policy={showHidden ? 'hidden' : policy}
                     onClick={onSelect ? () => onSelect(index) : undefined}
                     selected={selectedIndex === index}
                     disabled={disabled}

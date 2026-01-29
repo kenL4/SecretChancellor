@@ -5,6 +5,7 @@ import { useGame } from '@/context/GameContext';
 import { GamePhase, ExecutiveAction, Player } from '@/lib/gameTypes';
 import PolicyTrack from './PolicyTrack';
 import PlayerList from './PlayerList';
+import FormalHallTable from './FormalHallTable';
 import { PolicyCardGroup } from './PolicyCard';
 import Chat from './Chat';
 import styles from './GameBoard.module.css';
@@ -80,7 +81,7 @@ export default function GameBoard() {
                         </p>
                     </div>
 
-                    <PlayerList
+                    <FormalHallTable
                         players={gameState.players}
                         currentPlayerId={playerId}
                         hostId={gameState.hostId}
@@ -148,13 +149,13 @@ export default function GameBoard() {
                             className={`btn btn-approve ${styles.voteBtn}`}
                             onClick={() => castVote(true)}
                         >
-                            ✓ Ja! (Approve)
+                            ✓ Aye! (Approve)
                         </button>
                         <button
                             className={`btn btn-reject ${styles.voteBtn}`}
                             onClick={() => castVote(false)}
                         >
-                            ✗ Nein! (Reject)
+                            ✗ Nay! (Reject)
                         </button>
                     </div>
                 ) : (
@@ -169,7 +170,7 @@ export default function GameBoard() {
                     </span>
                 </div>
 
-                <PlayerList
+                <FormalHallTable
                     players={gameState.players}
                     currentPlayerId={playerId}
                     hostId={gameState.hostId}
@@ -318,7 +319,7 @@ export default function GameBoard() {
         if (isVC) {
             if (gameState.investigatedPlayerId) {
                 const investigated = gameState.players.find(p => p.id === gameState.investigatedPlayerId);
-                const partyMembership = investigated?.role === 'STUDENT_UNION' ? 'Student Union' : "Chancellor's Office";
+                const partyMembership = investigated?.role === 'STUDENT_UNION' ? 'Student Union' : "University Admin";
 
                 return (
                     <div className={styles.phaseContent}>
@@ -361,7 +362,7 @@ export default function GameBoard() {
                         </p>
                     </div>
 
-                    <PlayerList
+                    <FormalHallTable
                         players={gameState.players}
                         currentPlayerId={playerId}
                         hostId={gameState.hostId}
@@ -467,7 +468,7 @@ export default function GameBoard() {
                         </p>
                     </div>
 
-                    <PlayerList
+                    <FormalHallTable
                         players={gameState.players}
                         currentPlayerId={playerId}
                         hostId={gameState.hostId}
@@ -508,16 +509,16 @@ export default function GameBoard() {
                     <div className={styles.phaseHeader}>
                         <h2 className={styles.phaseTitle}>☠️ Execution</h2>
                         <p className={styles.phaseDescription}>
-                            You must execute a player. Choose wisely - if you execute the Chancellor, the Student Union wins!
+                            You must ban a player. Choose wisely - if you ban the Chancellor, the Student Union wins!
                         </p>
                     </div>
 
-                    <PlayerList
+                    <FormalHallTable
                         players={gameState.players}
                         currentPlayerId={playerId}
                         hostId={gameState.hostId}
                         onSelectPlayer={(id) => {
-                            if (confirm('Are you sure you want to execute this player?')) {
+                            if (confirm('Are you sure you want to ban this player?')) {
                                 executePlayer(id);
                             }
                         }}
@@ -534,7 +535,7 @@ export default function GameBoard() {
                 <div className={styles.phaseHeader}>
                     <h2 className={styles.phaseTitle}>☠️ Execution</h2>
                     <p className={styles.phaseDescription}>
-                        <strong>{vc?.name}</strong> must execute a player...
+                        <strong>{vc?.name}</strong> must ban a player...
                     </p>
                 </div>
 
@@ -574,12 +575,12 @@ export default function GameBoard() {
                     <div className={styles.tracks}>
                         <PolicyTrack
                             type="student_union"
-                            count={gameState.studentUnionPolicies}
+                            policies={gameState.studentUnionPolicies}
                             playerCount={gameState.players.length}
                         />
                         <PolicyTrack
                             type="admin"
-                            count={gameState.adminPolicies}
+                            policies={gameState.adminPolicies}
                             playerCount={gameState.players.length}
                         />
                     </div>

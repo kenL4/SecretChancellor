@@ -13,14 +13,14 @@ const ROLE_INFO = {
         color: 'studentUnion',
         objectives: [
             'Enact 5 Student Union policies',
-            'Identify and execute the Chancellor',
+            'Identify and ban the Chancellor',
             'Prevent Admin policies from being enacted'
         ]
     },
     [Role.CHANCELLORS_OFFICE]: {
-        title: "Chancellor's Office",
+        title: "University Admin",
         emoji: '🏛️',
-        description: "You are part of the Chancellor's Office. Help the Chancellor gain power by enacting Admin policies or getting them elected as Policy Chair.",
+        description: "You are part of the University Admin. Help the Chancellor gain power by enacting Admin policies or getting them elected as Policy Chair.",
         color: 'chancellorsOffice',
         objectives: [
             'Enact 6 Admin policies',
