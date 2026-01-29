@@ -156,14 +156,21 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
                 let game = gameStore.getGame(gameId);
                 if (!game) throw new Error('Game not found');
 
+                console.log(`[CAST_VOTE] Player ${clientSocket.id} voted ${data.vote}, Phase before: ${game.phase}`);
+
                 game = gameLogic.castVote(game, clientSocket.id, data.vote);
                 gameStore.setGame(game);
 
+                const phaseBefore = game.phase;
                 game = gameLogic.tallyVotes(game);
                 gameStore.setGame(game);
 
+                console.log(`[CAST_VOTE] Phase after tallyVotes: ${game.phase} (was ${phaseBefore})`);
+                console.log(`[CAST_VOTE] DrawnPolicies: ${game.drawnPolicies.length}, VC: ${game.players.find(p => p.isViceChancellor)?.name}`);
+
                 broadcastGameState(io, game);
             } catch (error) {
+                console.error('[CAST_VOTE] Error:', (error as Error).message);
                 clientSocket.emit(SOCKET_EVENTS.GAME_ERROR, { message: (error as Error).message });
             }
         });
@@ -350,6 +357,11 @@ function handlePlayerLeave(io: SocketIOServer, socket: Socket) {
     const gameId = gameStore.getPlayerGame(socket.id);
     if (!gameId) return;
 
+    // IMPORTANT: Remove player from room and mappings FIRST, before any broadcast
+    // This prevents the leaving player from receiving the game state update
+    socket.leave(gameId);
+    gameStore.removePlayerFromGame(socket.id);
+
     let game = gameStore.getGame(gameId);
     if (!game) return;
 
@@ -367,9 +379,6 @@ function handlePlayerLeave(io: SocketIOServer, socket: Socket) {
         gameStore.setGame(game);
         broadcastGameState(io, game);
     }
-
-    gameStore.removePlayerFromGame(socket.id);
-    socket.leave(gameId);
 }
 
 function broadcastGameState(io: SocketIOServer, game: GameState) {

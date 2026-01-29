@@ -1,4 +1,5 @@
 // In-memory game store (for production, use Redis or a database)
+// Uses globalThis to persist across Next.js hot module reloads in development
 
 import { GameState } from './gameTypes';
 
@@ -43,5 +44,17 @@ class GameStore {
     }
 }
 
-// Singleton instance
-export const gameStore = new GameStore();
+// Extend globalThis type to include our game store
+declare global {
+    // eslint-disable-next-line no-var
+    var __gameStore: GameStore | undefined;
+}
+
+// Singleton instance that persists across hot reloads in development
+// In production, this still works as a regular singleton
+export const gameStore = globalThis.__gameStore ?? new GameStore();
+
+// Store the instance in globalThis so it survives hot reloads
+if (process.env.NODE_ENV !== 'production') {
+    globalThis.__gameStore = gameStore;
+}

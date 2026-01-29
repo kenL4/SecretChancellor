@@ -42,6 +42,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const [isConnected, setIsConnected] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Track if player has explicitly left the game to prevent state updates
+    const hasLeftGameRef = React.useRef(false);
+
     useEffect(() => {
         const socketInstance = getSocket();
         setSocket(socketInstance);
@@ -58,6 +61,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
         });
 
         socketInstance.on(SOCKET_EVENTS.GAME_STATE, (state: GameState) => {
+            // Ignore game state updates if player has explicitly left
+            if (hasLeftGameRef.current) {
+                console.log('Ignoring game state update - player has left');
+                return;
+            }
             console.log('Received game state:', state.phase);
             setGameState(state);
         });
@@ -73,14 +81,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const createGame = useCallback((playerName: string) => {
+        hasLeftGameRef.current = false; // Reset flag when creating a new game
         socket?.emit(SOCKET_EVENTS.CREATE_GAME, { playerName });
     }, [socket]);
 
     const joinGame = useCallback((gameId: string, playerName: string) => {
+        hasLeftGameRef.current = false; // Reset flag when joining a game
         socket?.emit(SOCKET_EVENTS.JOIN_GAME, { gameId, playerName });
     }, [socket]);
 
     const leaveGame = useCallback(() => {
+        hasLeftGameRef.current = true; // Set flag to prevent future game state updates
         socket?.emit(SOCKET_EVENTS.LEAVE_GAME);
         setGameState(null);
     }, [socket]);

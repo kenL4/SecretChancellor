@@ -246,7 +246,10 @@ export function castVote(game: GameState, playerId: string, vote: boolean): Game
 // Tally votes and process result
 export function tallyVotes(game: GameState): GameState {
     const alivePlayers = game.players.filter(p => p.isAlive);
-    const votes = alivePlayers.filter(p => p.vote !== null);
+    // Check for votes that are explicitly true or false (not null or undefined)
+    const votes = alivePlayers.filter(p => p.vote === true || p.vote === false);
+
+    console.log(`[tallyVotes] Alive: ${alivePlayers.length}, Voted: ${votes.length}, Votes:`, votes.map(p => ({ name: p.name, vote: p.vote })));
 
     // Check if all votes are in
     if (votes.length !== alivePlayers.length) {
@@ -254,7 +257,10 @@ export function tallyVotes(game: GameState): GameState {
     }
 
     const yesVotes = votes.filter(p => p.vote === true).length;
+    const noVotes = votes.filter(p => p.vote === false).length;
     const majority = Math.floor(alivePlayers.length / 2) + 1;
+
+    console.log(`[tallyVotes] Yes: ${yesVotes}, No: ${noVotes}, Majority needed: ${majority}`);
 
     if (yesVotes >= majority) {
         // Election passed
@@ -327,12 +333,24 @@ function processElectionFailure(game: GameState): GameState {
 
     // Move to next Vice-Chancellor
     const alivePlayers = game.players.filter(p => p.isAlive);
-    let nextVCIndex = (game.currentViceChancellorIndex + 1) % alivePlayers.length;
+    const nextVCIndex = (game.currentViceChancellorIndex + 1) % alivePlayers.length;
+    const nextVCId = alivePlayers[nextVCIndex].id;
+
+    console.log(`[processElectionFailure] Election failed (${newFailedElections}/3), Next VC: ${alivePlayers[nextVCIndex].name}`);
+
+    // Update players to set new VC and reset votes
+    const updatedPlayers = game.players.map(p => ({
+        ...p,
+        isViceChancellor: p.id === nextVCId,
+        vote: null
+    }));
 
     return {
         ...game,
+        players: updatedPlayers,
         failedElections: newFailedElections,
         currentViceChancellorIndex: nextVCIndex,
+        nominatedChairId: null,
         phase: GamePhase.NOMINATE_CHAIR,
         phaseEndTime: Date.now() + game.phaseDuration
     };
@@ -464,11 +482,16 @@ function enactPolicy(game: GameState, policy: PolicyType, isChaos: boolean): Gam
 // Advance to next Vice-Chancellor
 function advanceViceChancellor(game: GameState): GameState {
     const alivePlayers = game.players.filter(p => p.isAlive);
-    let nextVCIndex = (game.currentViceChancellorIndex + 1) % alivePlayers.length;
+    const nextVCIndex = (game.currentViceChancellorIndex + 1) % alivePlayers.length;
+
+    // Get the ID of the next Vice-Chancellor from alive players
+    const nextVCId = alivePlayers[nextVCIndex].id;
+
+    console.log(`[advanceViceChancellor] Next VC index: ${nextVCIndex}, Next VC: ${alivePlayers[nextVCIndex].name}`);
 
     const updatedPlayers = game.players.map(p => ({
         ...p,
-        isViceChancellor: false,
+        isViceChancellor: p.id === nextVCId, // Set to true ONLY for the new VC
         isPolicyChair: false,
         vote: null
     }));
