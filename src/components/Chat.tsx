@@ -7,10 +7,19 @@ import styles from './Chat.module.css';
 export default function Chat() {
     const { gameState, sendMessage, playerId } = useGame();
     const [message, setMessage] = useState('');
-    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
+    const lastMessageCountRef = useRef(0);
 
+    // Only scroll chat when a new message is added; scroll the chat container only (not the page)
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        const count = gameState?.messages?.length ?? 0;
+        if (count > lastMessageCountRef.current) {
+            lastMessageCountRef.current = count;
+            const el = messagesContainerRef.current;
+            if (el) el.scrollTop = el.scrollHeight;
+        } else {
+            lastMessageCountRef.current = count;
+        }
     }, [gameState?.messages]);
 
     const handleSend = () => {
@@ -33,7 +42,7 @@ export default function Chat() {
             <div className={styles.header}>
                 <span className={styles.title}>💬 Discussion</span>
             </div>
-            <div className={styles.messages}>
+            <div ref={messagesContainerRef} className={styles.messages}>
                 {gameState.messages.length === 0 ? (
                     <div className={styles.emptyMessage}>
                         No messages yet. Start the discussion!
@@ -49,7 +58,6 @@ export default function Chat() {
                         </div>
                     ))
                 )}
-                <div ref={messagesEndRef} />
             </div>
             <div className={styles.inputContainer}>
                 <input
