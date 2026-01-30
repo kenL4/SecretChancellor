@@ -37,10 +37,12 @@ const GameContext = createContext<GameContextType | null>(null);
 
 const SESSION_STORAGE_KEY = 'secretChancellorSession';
 
+// Use sessionStorage (per-tab) so multiple tabs can debug different players locally.
+// Still reconnects after refresh in the same tab; each tab keeps its own gameId/playerName.
 function getStoredSession(): { gameId: string; playerName: string } | null {
     if (typeof window === 'undefined') return null;
     try {
-        const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+        const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
         if (!raw) return null;
         const data = JSON.parse(raw) as { gameId?: string; playerName?: string };
         if (data.gameId && data.playerName) return { gameId: data.gameId, playerName: data.playerName };
@@ -53,7 +55,7 @@ function getStoredSession(): { gameId: string; playerName: string } | null {
 function saveSession(gameId: string, playerName: string): void {
     if (typeof window === 'undefined') return;
     try {
-        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify({ gameId, playerName }));
+        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify({ gameId, playerName }));
     } catch {
         // ignore
     }
@@ -62,7 +64,7 @@ function saveSession(gameId: string, playerName: string): void {
 function clearSession(): void {
     if (typeof window === 'undefined') return;
     try {
-        localStorage.removeItem(SESSION_STORAGE_KEY);
+        sessionStorage.removeItem(SESSION_STORAGE_KEY);
     } catch {
         // ignore
     }
