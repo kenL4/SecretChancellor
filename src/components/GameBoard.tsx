@@ -8,6 +8,7 @@ import PlayerList from './PlayerList';
 import FormalHallTable from './FormalHallTable';
 import { PolicyCardGroup } from './PolicyCard';
 import Chat from './Chat';
+import RoleReminder from './RoleReminder';
 import styles from './GameBoard.module.css';
 
 export default function GameBoard() {
@@ -551,7 +552,9 @@ export default function GameBoard() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <h1 className={styles.title}>🎓 Secret Chancellor</h1>
-                <div className={styles.electionTracker}>
+                <div className={styles.headerRight}>
+                    <RoleReminder />
+                    <div className={styles.electionTracker}>
                     <span className={styles.electionLabel}>Election Tracker:</span>
                     <div className={styles.electionMarkers}>
                         {[0, 1, 2].map(i => (
@@ -567,6 +570,7 @@ export default function GameBoard() {
                     {gameState.failedElections === 2 && (
                         <span className={styles.electionWarning}>⚠️ Next failure = chaos!</span>
                     )}
+                    </div>
                 </div>
             </div>
 

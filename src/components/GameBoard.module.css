@@ -17,6 +17,12 @@
     margin: 0;
 }
 
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
 .electionTracker {
     display: flex;
     align-items: center;

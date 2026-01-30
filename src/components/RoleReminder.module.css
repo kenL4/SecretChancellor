@@ -1,0 +1,115 @@
+.container {
+    position: relative;
+}
+
+.trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.trigger:hover {
+    border-color: var(--gold-accent);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.triggerEmoji {
+    font-size: 1rem;
+}
+
+.triggerLabel {
+    color: var(--text-secondary);
+}
+
+.chevron {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-left: var(--space-xs);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + var(--space-sm));
+    right: 0;
+    min-width: 280px;
+    max-width: 320px;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdownHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.dropdownEmoji {
+    font-size: 1.5rem;
+}
+
+.dropdownTitle {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dropdownDescription {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.objectives {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.objectives li {
+    margin-bottom: var(--space-xs);
+}
+
+/* Role accent colors for dropdown */
+.studentUnion {
+    background: var(--bg-card);
+    border-color: rgba(52, 152, 219, 0.4);
+}
+
+.chancellorsOffice {
+    background: var(--bg-card);
+    border-color: rgba(192, 57, 43, 0.4);
+}
+
+.chancellor {
+    background: var(--bg-card);
+    border-color: rgba(212, 175, 55, 0.5);
+}
