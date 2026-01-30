@@ -35,6 +35,39 @@ interface GameContextType {
 
 const GameContext = createContext<GameContextType | null>(null);
 
+const SESSION_STORAGE_KEY = 'secretChancellorSession';
+
+function getStoredSession(): { gameId: string; playerName: string } | null {
+    if (typeof window === 'undefined') return null;
+    try {
+        const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+        if (!raw) return null;
+        const data = JSON.parse(raw) as { gameId?: string; playerName?: string };
+        if (data.gameId && data.playerName) return { gameId: data.gameId, playerName: data.playerName };
+    } catch {
+        // ignore
+    }
+    return null;
+}
+
+function saveSession(gameId: string, playerName: string): void {
+    if (typeof window === 'undefined') return;
+    try {
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify({ gameId, playerName }));
+    } catch {
+        // ignore
+    }
+}
+
+function clearSession(): void {
+    if (typeof window === 'undefined') return;
+    try {
+        localStorage.removeItem(SESSION_STORAGE_KEY);
+    } catch {
+        // ignore
+    }
+}
+
 export function GameProvider({ children }: { children: ReactNode }) {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [gameState, setGameState] = useState<GameState | null>(null);
@@ -53,6 +86,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
             console.log('Connected to server:', socketInstance.id);
             setPlayerId(socketInstance.id || null);
             setIsConnected(true);
+            // Auto-reconnect: if we have a stored session, rejoin the game (e.g. after page reload)
+            const session = getStoredSession();
+            if (session && !hasLeftGameRef.current) {
+                socketInstance.emit(SOCKET_EVENTS.JOIN_GAME, {
+                    gameId: session.gameId,
+                    playerName: session.playerName
+                });
+            }
         });
 
         socketInstance.on('disconnect', () => {
@@ -68,11 +109,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
             }
             console.log('Received game state:', state.phase);
             setGameState(state);
+            // Persist session so we can reconnect after reload
+            const me = state.players.find(p => p.id === socketInstance.id);
+            if (me) saveSession(state.gameId, me.name);
         });
 
         socketInstance.on(SOCKET_EVENTS.GAME_ERROR, (data: { message: string }) => {
             console.error('Game error:', data.message);
             setError(data.message);
+            // Clear session if rejoin failed (game gone) so we don't retry on next connect
+            if (data.message === 'Game not found') clearSession();
         });
 
         return () => {
@@ -92,6 +138,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     const leaveGame = useCallback(() => {
         hasLeftGameRef.current = true; // Set flag to prevent future game state updates
+        clearSession();
         socket?.emit(SOCKET_EVENTS.LEAVE_GAME);
         setGameState(null);
     }, [socket]);

@@ -344,8 +344,12 @@ export function addChatMessage(game: GameState, playerId: string, message: strin
   return { ...game, messages: [...game.messages, chatMessage].slice(-100) };
 }
 
-export function reconnectPlayer(game: GameState, playerId: string): GameState {
-  return { ...game, players: game.players.map(p => (p.id === playerId ? { ...p, connected: true } : p)) };
+export function reconnectPlayer(game: GameState, oldPlayerId: string, newSocketId: string): GameState {
+  const players = game.players.map(p =>
+    p.id === oldPlayerId ? { ...p, id: newSocketId, connected: true } : p
+  );
+  const hostId = game.hostId === oldPlayerId ? newSocketId : game.hostId;
+  return { ...game, players, hostId };
 }
 
 export function disconnectPlayer(game: GameState, playerId: string): GameState {

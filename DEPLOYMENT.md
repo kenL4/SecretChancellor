@@ -111,7 +111,7 @@ To run in the background and survive logout, use **systemd**.
 Create a service file:
 
 ```bash
-sudo nano /etc/systemd/system/secret-chancellor.service
+sudo nano /etc/systemd/system/SecretChancellor.service
 ```
 
 Paste (adjust paths and `CORS_ORIGIN`):
@@ -124,9 +124,9 @@ After=network.target
 [Service]
 Type=simple
 User=ec2-user
-WorkingDirectory=/home/ec2-user/secret-chancellor/backend
+WorkingDirectory=/home/ec2-user/SecretChancellor/backend
 Environment="PORT=4000"
-Environment="CORS_ORIGIN=https://your-app.vercel.app"
+Environment="CORS_ORIGIN=https://secret-chancellor.vercel.app"
 ExecStart=/usr/bin/node dist/index.js
 Restart=on-failure
 RestartSec=5
@@ -139,9 +139,9 @@ Enable and start:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable secret-chancellor
-sudo systemctl start secret-chancellor
-sudo systemctl status secret-chancellor
+sudo systemctl enable SecretChancellor
+sudo systemctl start SecretChancellor
+sudo systemctl status SecretChancellor
 ```
 
 Logs: `sudo journalctl -u secret-chancellor -f`

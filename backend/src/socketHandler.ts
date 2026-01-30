@@ -28,7 +28,7 @@ export function attachSocketHandler(io: SocketIOServer): void {
         if (!game) throw new Error('Game not found');
         const existingPlayer = game.players.find(p => p.name === data.playerName);
         if (existingPlayer) {
-          game = gameLogic.reconnectPlayer(game, existingPlayer.id);
+          game = gameLogic.reconnectPlayer(game, existingPlayer.id, clientSocket.id);
           gameStore.setGame(game);
           gameStore.setPlayerGame(clientSocket.id, game.gameId);
           clientSocket.join(game.gameId);
@@ -261,13 +261,14 @@ function handlePlayerLeave(io: SocketIOServer, socket: Socket): void {
   gameStore.removePlayerFromGame(socket.id);
   let game = gameStore.getGame(gameId);
   if (!game) return;
-  game = gameLogic.removePlayer(game, socket.id);
+  // Mark player disconnected so they can reconnect (reload page) with same name
+  game = gameLogic.disconnectPlayer(game, socket.id);
   if (game.players.length === 0) {
     gameStore.deleteGame(gameId);
   } else {
     if (game.hostId === socket.id) {
-      const newHost = game.players.find(p => p.connected);
-      if (newHost) game = { ...game, hostId: newHost.id };
+      const newHost = game.players.find(p => p.connected) || game.players[0];
+      game = { ...game, hostId: newHost.id };
     }
     gameStore.setGame(game);
     broadcastGameState(io, game);
