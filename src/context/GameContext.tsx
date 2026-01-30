@@ -70,6 +70,37 @@ function clearSession(): void {
     }
 }
 
+/**
+ * Detect stale GAME_STATE that would clear our policy cards (e.g. delayed/out-of-order
+ * broadcast from before we had drawnPolicies or policiesForChair). Reject so we don't
+ * overwrite good state and leave the player unable to play.
+ */
+function isStalePolicyState(
+    prev: GameState | null,
+    incoming: GameState,
+    playerId: string | null
+): boolean {
+    if (!prev || !playerId) return false;
+    if (prev.phase !== incoming.phase) return false;
+    const mePrev = prev.players.find(p => p.id === playerId);
+    const meIncoming = incoming.players.find(p => p.id === playerId);
+    if (!mePrev || !meIncoming) return false;
+    // Same phase; we had cards for our role, incoming has none -> treat as stale
+    if (
+        prev.phase === GamePhase.POLICY_DRAW &&
+        mePrev.isViceChancellor &&
+        prev.drawnPolicies.length > 0 &&
+        incoming.drawnPolicies.length === 0
+    ) return true;
+    if (
+        prev.phase === GamePhase.POLICY_CHAIR &&
+        mePrev.isPolicyChair &&
+        prev.policiesForChair.length > 0 &&
+        incoming.policiesForChair.length === 0
+    ) return true;
+    return false;
+}
+
 export function GameProvider({ children }: { children: ReactNode }) {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [gameState, setGameState] = useState<GameState | null>(null);
@@ -109,11 +140,20 @@ export function GameProvider({ children }: { children: ReactNode }) {
                 console.log('Ignoring game state update - player has left');
                 return;
             }
-            console.log('Received game state:', state.phase);
-            setGameState(state);
-            // Persist session so we can reconnect after reload
-            const me = state.players.find(p => p.id === socketInstance.id);
-            if (me) saveSession(state.gameId, me.name);
+            const socketId = socketInstance.id ?? null;
+            let applied = true;
+            setGameState(prev => {
+                // Avoid overwriting with stale state that would clear our policy cards
+                if (isStalePolicyState(prev, state, socketId)) {
+                    applied = false;
+                    return prev;
+                }
+                return state;
+            });
+            if (applied) {
+                const me = state.players.find(p => p.id === socketInstance.id);
+                if (me) saveSession(state.gameId, me.name);
+            }
         });
 
         socketInstance.on(SOCKET_EVENTS.GAME_ERROR, (data: { message: string }) => {
