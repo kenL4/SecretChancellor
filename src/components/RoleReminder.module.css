@@ -50,6 +50,21 @@
     animation: fadeIn 0.2s ease;
 }
 
+@media (max-width: 640px) {
+    .container {
+        width: 100%;
+    }
+
+    .dropdown {
+        left: 0;
+        right: 0;
+        min-width: 0;
+        max-width: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
