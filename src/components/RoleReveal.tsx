@@ -7,7 +7,7 @@ import { ROLE_INFO } from '@/lib/roleInfo';
 import styles from './RoleReveal.module.css';
 
 export default function RoleReveal() {
-    const { gameState, playerId, readyForNomination } = useGame();
+    const { gameState, playerId } = useGame();
 
     if (!gameState) return null;
 
@@ -71,12 +71,8 @@ export default function RoleReveal() {
                 )}
 
                 <div className={styles.warning}>
-                    ⏱️ Memorize your role! The game will begin shortly...
+                    ⏱️ The game will begin shortly...
                 </div>
-
-                <button className="btn btn-gold" onClick={readyForNomination}>
-                    I'm Ready - Start the Game
-                </button>
             </div>
         </div>
     );
