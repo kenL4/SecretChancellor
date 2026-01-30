@@ -39,7 +39,7 @@ export default function RoleReminder() {
                 aria-haspopup="true"
                 aria-label="Review your role"
             >
-                <span className={styles.triggerEmoji}>{roleInfo.emoji}</span>
+                {/* <span className={styles.triggerEmoji}>{roleInfo.emoji}</span> */}
                 <span className={styles.triggerLabel}>Your role</span>
                 <span className={styles.chevron} aria-hidden>{open ? '▲' : '▼'}</span>
             </button>
